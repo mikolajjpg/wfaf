@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>Lista użytkowników</h2>
+    <table border="2">
+        {% for user in users %}
+        <tr><td>{{user.nickname}}</td><td>{{user.age}}</td><td>{{user.status}}</td></tr>
+        {% endfor %}
+    </table>
+       
+    
+</body>
+</html>
