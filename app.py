@@ -1,60 +1,50 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "Hello world"
+    return "flask dziala"
 
-@app.route("/about")
-def about():
-    return "Mikolaj"
+@app.route("/form", methods=["GET", "POST"])
+def form():
+    fullname = None
+    error = None
+    if request.method == "POST":
+        fullname = request.form.get('fullname')
+        if not fullname.strip():
+            error = "Nie podales swojego imienia i nazwiska"
+            return render_template("form.html", fullname = None, erorr = error)
 
-@app.route("/contact")
-def contact():
-    return "Dane komorkowe"
+    return render_template("form.html", fullname = fullname)
 
-@app.route("/hello/<name>")
-def hello(name):
-    return f"Hello {name}"
+@app.route("/better_calc", methods=["GET", "POST"])
+def calc():
+    result = None
+    error = None
+    a = None
+    b = None
+    operator = None
+    if request.method == "POST":
+        a = request.form.get('a')
+        b = request.form.get('b')
+        operator = request.form.get('operator')
 
-@app.route("/square/<int:n>")
-def square(n):
-    return f"{n} to {n**2}"
+        if not a or not b:
+            error = "nie podales liczb"
+            return render_template("better_calc.html", result = None, error=error, a = a,
+    b = b,
+    operator = operator)
+        
+        if operator == "/" and "b" == "0":
+            return render_template("better_calc.html", result = None, error=error, a = a,
+    b = b,
+    operator = operator)
+        
+        
+        result = eval(f"{a}{operator}{b}")
 
-from datetime import datetime
-@app.route("/datatime")
-def datatime():
-    return f"{datatime.now()}"
-
-from flask import render_template
-
-@app.route("/h_template/<nickname>")
-def h_template(nickname):
-    return render_template("index.html", name = nickname)
-
-@app.route("/age/<int:age>")
-def age(age):
-    return render_template("age.html", age = age)
-
-@app.route("/loop")
-def loop():
-    data = ["Python", "Flask", "HTML"]
-    return render_template("loop.html", items = data)
-
-
-@app.route("/users")
-def users():
-    data = [{'status':"active",
-            "nickname": "dzordzo_automatovic",
-            "age": "41"},
-            {'status':"active",
-            "nickname": "maniek",
-            "age": "21"},
-            {'status':"active",
-            "nickname": "dzordzo",
-            "age": "34"}]
-    return render_template("users.html", users = data)
+    return render_template("better_calc.html", result=result, error=error, a=a, b=b, operator = operator)
 
 
 app.run(debug=True)

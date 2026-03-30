@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+</head>
+<body>
+    <h1>Kalkulator</h1>
+    <form method="POST">
+        <input type="number" name="a" placeholder="Pierwsza liczba" />
+        <input type="number" name="b" placeholder="Druga liczba" /><br>
+        <select name="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select><br / >
+        <button type="submit">Oblicz</button>
+    </form>
+    {% if erorr %}
+    <h2 style="color: red;">Blad: {{erorr}}</h2>
+    {% endif%}
+    {% if result %}
+    <h2 style="color: blue;"> Wynik: {{result}}</h2>
+    {% endif%}
+</body>
+</html>
