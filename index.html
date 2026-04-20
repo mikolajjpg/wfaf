@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title%}ToDo List{%endblock%}</title>
+    <title>{% block title %}ToDo List{% endblock %}</title>
 </head>
 <body>
     <header>
         <h1>ToDo List</h1>
-        <a href="{{url_for('index')}}">Home</a>
-        <a href="{{url_for('ping_db')}}">Ping</a>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('ping_db') }}">Ping</a>
+        <a href="{{ url_for('list_tasks') }}">Lista</a>
     </header>
-    {%block content%}
-    <p>Witaj w apikacji ToDo List</p>
-    {%endblock%}
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    {% block content %}
+    <p>Witaj w aplikacji ToDo List</p>
+    {% endblock %}
 </body>
 </html>
